@@ -1,0 +1,29 @@
+.search {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+}
+
+.search__input {
+  width: 100%;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 40px 11px 16px;
+  font-size: 15px;
+  color: var(--light);
+  outline: none;
+}
+
+.search__input:focus {
+  border-color: var(--red);
+}
+
+.search__clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray);
+  font-size: 14px;
+}
