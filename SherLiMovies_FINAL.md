@@ -1587,39 +1587,3 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>
 )
 ```
-
----
-
-## Что изменилось по сравнению с первой версией и почему
-
-**Стили** — перенесены в отдельные CSS файлы. Инлайн стили убраны почти полностью — только там где они нужны динамически (backdrop фото).
-
-**useFetch** — убран AbortController, теперь простой fetch с .then/.catch. Именно так пишут студенты когда разбираются с хуками.
-
-**AppContext** — инициализация через useEffect вместо ленивой функции в useState. Проще читается.
-
-**Функция toggleFavorite** — переименована в addToFavorites с обычным if/else внутри вместо функционального обновления с prev.
-
-**App.jsx** — PrivateRoute компонент с простым if-check вместо тернарника. Названа понятно.
-
-**Loader** — убран несуществующий импорт CSS модуля.
-
-**Navbar** — убраны onMouseEnter/onMouseLeave, теперь hover через CSS.
-
----
-
-## Чеклист по критериям
-
-- ✅ useState и useEffect — есть в хуках, контексте, страницах
-- ✅ useFetch — кастомный хук, используется везде
-- ✅ useDebounce — кастомный хук для поиска
-- ✅ Минимум 5 компонентов: MovieCard, MovieGrid, Navbar, SearchBar, Loader
-- ✅ Минимум 1 форма: WelcomePage и ProfilePage
-- ✅ Работа с API — TMDB
-- ✅ loading / error / success состояния обработаны
-- ✅ Context — AppContext, все данные только там
-- ✅ GET запросы через useFetch, POST/изменение через state
-- ✅ Роутинг настроен, есть переход на /movie/:id
-- ✅ localStorage — избранное и история
-- ✅ Структура src/components, src/pages, src/hooks
-```
