@@ -1,0 +1,46 @@
+.home {
+  padding-top: 28px;
+  padding-bottom: 50px;
+}
+
+.home__search {
+  margin-bottom: 24px;
+}
+
+.home__cats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.home__cat-btn {
+  padding: 7px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  background: var(--dark2);
+  color: var(--gray);
+  border: 1px solid var(--border);
+}
+
+.home__cat-btn:hover {
+  color: var(--light);
+}
+
+.home__cat-btn--active {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+
+.home__heading {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.home__error {
+  color: var(--red);
+  text-align: center;
+  padding: 40px 0;
+}

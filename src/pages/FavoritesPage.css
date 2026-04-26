@@ -1,0 +1,36 @@
+.favs {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.favs__title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.favs__count {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.favs__empty {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--gray);
+}
+
+.favs__empty-icon {
+  font-size: 48px;
+  margin-bottom: 14px;
+}
+
+.favs__empty-hint {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #555;
+}
