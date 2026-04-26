@@ -1,26 +1,46 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
+import { AppContext } from './AppContextValue'
 
-const AppContext = createContext(null)
+function parseLocalStorageJSON(key, fallback) {
+  try {
+    const value = localStorage.getItem(key)
+    return value ? JSON.parse(value) : fallback
+  } catch {
+    return fallback
+  }
+}
+
+function normalizeUser(value) {
+  if (!value || typeof value !== 'object') return null
+
+  const name = typeof value.name === 'string' ? value.name.trim() : ''
+  if (!name) return null
+
+  return {
+    name,
+    description: typeof value.description === 'string' ? value.description : '',
+    avatar: typeof value.avatar === 'string' ? value.avatar : '',
+  }
+}
 
 export function AppProvider({ children }) {
-  const [favorites, setFavorites] = useState([])
-  const [watched, setWatched] = useState([])
-  const [user, setUser] = useState(null)
-  // isReady нужен чтобы не было моргания на /welcome при обновлении страницы
-  const [isReady, setIsReady] = useState(false)
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavs = parseLocalStorageJSON('favorites', [])
+    return Array.isArray(savedFavs) ? savedFavs : []
+  })
 
-  // Загружаем данные из localStorage при старте
-  useEffect(() => {
-    const savedFavs = localStorage.getItem('favorites')
-    const savedWatched = localStorage.getItem('watched')
-    const savedUser = localStorage.getItem('user')
+  const [watched, setWatched] = useState(() => {
+    const savedWatched = parseLocalStorageJSON('watched', [])
+    return Array.isArray(savedWatched) ? savedWatched : []
+  })
 
-    if (savedFavs) setFavorites(JSON.parse(savedFavs))
-    if (savedWatched) setWatched(JSON.parse(savedWatched))
-    if (savedUser) setUser(JSON.parse(savedUser))
+  const [user, setUser] = useState(() => {
+    const savedUser = parseLocalStorageJSON('user', null)
+    return normalizeUser(savedUser)
+  })
 
-    setIsReady(true)
-  }, [])
+  // Для текущего проекта данные уже готовы после lazy-init из localStorage.
+  const isReady = true
 
   // Сохраняем избранное при изменении
   useEffect(() => {
@@ -39,33 +59,31 @@ export function AppProvider({ children }) {
     }
   }, [user])
 
-  function addToFavorites(movie) {
-    const alreadyIn = favorites.find((m) => m.id === movie.id)
-    if (alreadyIn) {
-      setFavorites(favorites.filter((m) => m.id !== movie.id))
-    } else {
-      setFavorites([...favorites, movie])
-    }
-  }
+  const addToFavorites = useCallback((movie) => {
+    setFavorites((prev) => {
+      const alreadyIn = prev.some((m) => m.id === movie.id)
+      return alreadyIn ? prev.filter((m) => m.id !== movie.id) : [...prev, movie]
+    })
+  }, [])
 
-  function addToWatched(movie) {
-    const alreadyIn = watched.find((m) => m.id === movie.id)
-    if (!alreadyIn) {
-      setWatched([movie, ...watched])
-    }
-  }
+  const addToWatched = useCallback((movie) => {
+    setWatched((prev) => {
+      const alreadyIn = prev.some((m) => m.id === movie.id)
+      return alreadyIn ? prev : [movie, ...prev]
+    })
+  }, [])
 
-  function isFavorite(id) {
+  const isFavorite = useCallback((id) => {
     return favorites.some((m) => m.id === id)
-  }
+  }, [favorites])
+
+  const value = useMemo(() => {
+    return { favorites, watched, user, setUser, addToFavorites, addToWatched, isFavorite, isReady }
+  }, [favorites, watched, user, addToFavorites, addToWatched, isFavorite, isReady])
 
   return (
-    <AppContext.Provider value={{ favorites, watched, user, setUser, addToFavorites, addToWatched, isFavorite, isReady }}>
+    <AppContext.Provider value={value}>
       {children}
     </AppContext.Provider>
   )
-}
-
-export function useApp() {
-  return useContext(AppContext)
 }

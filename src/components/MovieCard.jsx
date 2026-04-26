@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import './MovieCard.css'
 
 const IMG_BASE = 'https://image.tmdb.org/t/p/w342'
