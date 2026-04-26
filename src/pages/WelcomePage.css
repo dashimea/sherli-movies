@@ -1,0 +1,80 @@
+.welcome {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--dark);
+}
+
+.welcome__box {
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.welcome__icon {
+  font-size: 52px;
+  margin-bottom: 14px;
+}
+
+.welcome__title {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.welcome__sub {
+  color: var(--gray);
+  font-size: 15px;
+  margin-bottom: 36px;
+}
+
+.welcome__input {
+  width: 100%;
+  background: var(--dark2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: var(--light);
+  outline: none;
+  margin-bottom: 8px;
+}
+
+.welcome__input:focus {
+  border-color: var(--red);
+}
+
+.welcome__input--error {
+  border-color: var(--red);
+}
+
+.welcome__error {
+  color: var(--red);
+  font-size: 13px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.welcome__btn {
+  width: 100%;
+  background: var(--red);
+  color: white;
+  border-radius: 8px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.welcome__btn:hover {
+  background: #c0303d;
+}
+
+.welcome__note {
+  color: #444;
+  font-size: 13px;
+  margin-top: 18px;
+}
