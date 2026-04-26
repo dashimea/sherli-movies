@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar'
 import MovieGrid from '../components/MovieGrid'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import './FavoritesPage.css'
 
 function FavoritesPage() {

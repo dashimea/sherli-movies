@@ -108,6 +108,53 @@
   font-size: 15px;
 }
 
+.movie-page__trailer {
+  margin-bottom: 24px;
+}
+
+.movie-page__trailer-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.movie-page__trailer-wrap {
+  width: 100%;
+  max-width: 760px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--dark2);
+}
+
+.movie-page__trailer-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  display: block;
+}
+
+.movie-page__trailer-empty {
+  color: var(--gray);
+  font-size: 14px;
+}
+
+.movie-page__trailer-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--light);
+  font-size: 13px;
+  background: var(--dark2);
+}
+
+.movie-page__trailer-link:hover {
+  border-color: var(--red);
+  color: white;
+}
+
 .movie-page__fav-btn {
   padding: 11px 26px;
   border-radius: 8px;

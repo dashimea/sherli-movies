@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import useFetch from '../hooks/useFetch'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import Navbar from '../components/Navbar'
 import Loader from '../components/Loader'
 import './MoviePage.css'
@@ -15,14 +15,28 @@ function MoviePage({ mediaType = 'movie' }) {
   const { addToFavorites, isFavorite, addToWatched } = useApp()
 
   const { data: item, loading, error } = useFetch(`${API_BASE}/${mediaType}/${id}?language=ru-RU`)
+  const { data: videosRes } = useFetch(`${API_BASE}/${mediaType}/${id}/videos?language=ru-RU`)
 
   const fav = isFavorite(Number(id))
+
+  const videos = Array.isArray(videosRes?.results) ? videosRes.results : []
+  const trailer =
+    videos.find((video) => video.site === 'YouTube' && video.type === 'Trailer') ||
+    videos.find((video) => video.site === 'YouTube')
+
+  const trailerUrl = trailer?.key
+    ? `https://www.youtube.com/embed/${trailer.key}`
+    : null
+
+  const trailerWatchUrl = trailer?.key
+    ? `https://www.youtube.com/watch?v=${trailer.key}`
+    : null
 
   useEffect(() => {
     if (item) {
       addToWatched(item)
     }
-  }, [item])
+  }, [item, addToWatched])
 
   if (loading) {
     return (
@@ -114,6 +128,34 @@ function MoviePage({ mediaType = 'movie' }) {
             {item.overview && (
               <p className="movie-page__overview">{item.overview}</p>
             )}
+
+            <div className="movie-page__trailer">
+              <h2 className="movie-page__trailer-title">Трейлер</h2>
+              {trailerUrl ? (
+                <div className="movie-page__trailer-wrap">
+                  <iframe
+                    className="movie-page__trailer-frame"
+                    src={trailerUrl}
+                    title={`Трейлер: ${title}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <p className="movie-page__trailer-empty">Трейлер недоступен</p>
+              )}
+
+              {trailerWatchUrl && (
+                <a
+                  className="movie-page__trailer-link"
+                  href={trailerWatchUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Открыть на YouTube
+                </a>
+              )}
+            </div>
 
             <button
               className={`movie-page__fav-btn ${fav ? 'movie-page__fav-btn--active' : ''}`}

@@ -33,12 +33,9 @@ function HomePage() {
 
   const isSearching = debouncedQuery.length > 0
 
-  let movies = []
-  if (isSearching) {
-    movies = searchRes ? searchRes.results.filter((m) => m.media_type !== 'person') : []
-  } else {
-    movies = catRes ? catRes.results : []
-  }
+  const movies = isSearching
+    ? (Array.isArray(searchRes?.results) ? searchRes.results : []).filter((m) => m.media_type !== 'person')
+    : (Array.isArray(catRes?.results) ? catRes.results : [])
 
   const loading = isSearching ? searchLoading : catLoading
   const error = isSearching ? searchErr : catErr

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useApp } from '../context/AppContext'
+import { useApp } from '../context/useApp'
 import './WelcomePage.css'
 
 function WelcomePage() {
@@ -14,7 +14,7 @@ function WelcomePage() {
       setError('Введи имя чтобы продолжить')
       return
     }
-    setUser({ name: name.trim(), description: '' })
+    setUser({ name: name.trim(), description: '', avatar: '' })
     navigate('/')
   }
 
